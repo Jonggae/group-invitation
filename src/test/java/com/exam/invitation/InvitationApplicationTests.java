@@ -1,9 +1,9 @@
 package com.exam.invitation;
 
 import com.exam.invitation.domain.InvitationLink;
-import com.exam.invitation.domain.Member;
+import com.exam.invitation.domain.TempMember;
 import com.exam.invitation.repository.InvitationLinkRepository;
-import com.exam.invitation.repository.MemberRepository;
+import com.exam.invitation.repository.TempMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +14,11 @@ class InvitationApplicationTests {
     // 테스트 코드 작성 시, 선행되어야 할 조건들과 그 이유는 무엇일까? ↓↓
     // repository를 임포트, Autowired의 사용 이유
 
-    private final MemberRepository memberRepository;
+    private final TempMemberRepository memberRepository;
     private final InvitationLinkRepository invitationLinkRepository;
 
     @Autowired
-    public InvitationApplicationTests(MemberRepository memberRepository, InvitationLinkRepository invitationLinkRepository) {
+    public InvitationApplicationTests(TempMemberRepository memberRepository, InvitationLinkRepository invitationLinkRepository) {
         this.memberRepository = memberRepository;
         this.invitationLinkRepository = invitationLinkRepository;
     }
@@ -26,14 +26,14 @@ class InvitationApplicationTests {
     @Test
     void 임시회원생성() {
         // 회원 저장
-        Member member = new Member();
+        TempMember member = new TempMember();
         member.setName("CJW");
         member.setEmail("abc@mail.com");
         member.setPhoneNumber("0001234567");
         memberRepository.save(member);
 
         //임시 회원 검색
-        Member findMember = memberRepository.findById(member.getId()).get(); // .get();을 왜 쓰는지?
+        TempMember findMember = memberRepository.findById(member.getId()).get(); // .get();을 왜 쓰는지?
         Assertions.assertThat(member.getName()).isEqualTo(findMember.getName());
     }
 
