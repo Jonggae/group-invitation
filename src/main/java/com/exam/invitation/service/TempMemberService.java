@@ -11,7 +11,7 @@ public class TempMemberService {
 
     private final TempMemberRepository tempMemberRepository;
 
-    // 초대 링크 생성과 함께 임시 멤버 생성
+    // 초대 링크 생성과 함께 임시 멤버 생성해야함
     public void createTempMember(String name, String email, String phoneNumber) {
         TempMember tempMember = new TempMember();
         tempMember.setName(name);
