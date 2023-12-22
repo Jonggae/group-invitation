@@ -9,5 +9,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/invitation")
 public class InvitationLinkController {
 
-//    private final
 }
