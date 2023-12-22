@@ -17,7 +17,7 @@ public class TempMemberService {
         tempMember.setName(name);
         tempMember.setEmail(email);
         tempMember.setPhoneNumber(phoneNumber);
-        // activate는 초기값이 false이므로 생략
+        // activate 는 초기값이 false 이므로 생략
 
         tempMemberRepository.save(tempMember);
     }

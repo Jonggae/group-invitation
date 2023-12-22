@@ -18,8 +18,9 @@ public class InvitationLinkService {
 
         UUID uuid = UUID.randomUUID();
 
-        String randomLink =uuid.toString()
-                .replace("-",""); /*
+        String randomLink = uuid.toString()
+                .replace("-", "");
+        /*
                 하이픈 제거하지 않으면 f8c804bc-63e2-4c84-b7d6-fa38c19e4803 이런식으로 생성*/
 
         return "https://testdomain.com/invitaion/" + randomLink;
