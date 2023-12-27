@@ -27,6 +27,7 @@ public class InvitationLinkService {
         /*하이픈 제거하지 않으면 f8c804bc-63e2-4c84-b7d6-fa38c19e4803 이런식으로 생성*/
 
         return "https://testdomain.com/invitaion/" + randomLink;
+        // 하드코딩말고 도메인을 따로 관리하는것이 좋음.
 
     }
 
