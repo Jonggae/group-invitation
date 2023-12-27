@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/invitation")
-public class InvitationLinkController {
+public class InvitationController {
 
     private final InvitationLinkService invitationLinkService;
     private final TempMemberService tempMemberService;
