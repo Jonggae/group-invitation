@@ -18,7 +18,11 @@ public class TempMember {
     private String phoneNumber; //초대받을 사용자의 전화번호
     private String email; //초대받을 사용자의 이메일 주소
 
-    private boolean activated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어 활성화 시키지 않음.
+    private boolean activated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
+
+    public void activate() {
+        this.setActivated(true);
+    }
 
     // 임시 회원을 생성하려면 getter setter가 필요한가?
 }
