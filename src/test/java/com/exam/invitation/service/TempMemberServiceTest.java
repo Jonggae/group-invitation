@@ -1,6 +1,7 @@
 package com.exam.invitation.service;
 
 import com.exam.invitation.domain.TempMember;
+import com.exam.invitation.dto.TempMemberDto;
 import com.exam.invitation.repository.TempMemberRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -21,11 +22,9 @@ class TempMemberServiceTest {
     @Autowired
     private TempMemberService tempMemberService;
 
-    @Autowired
     // autowired가 없으면 오류가 발생
     // Cannot invoke "com.exam.invitation.service.TempMemberService.createTempMember(String, String, String)" because "this.tempMemberService" is null
-
-    private TempMemberRepository tempMemberRepository;
+    @Autowired private TempMemberRepository tempMemberRepository;
 
     @Test
     @Disabled
@@ -53,20 +52,21 @@ class TempMemberServiceTest {
     @Transactional
     void createTempMember2() {
         //given
+        TempMemberDto tempMemberDto = new TempMemberDto();
         String name = "CJW";
         String email = "CJW@mail.com";
         String phoneNumber = "01012345678";
 
         //when
-        tempMemberService.createTempMember(name, email, phoneNumber);
+        tempMemberService.createTempMember(tempMemberDto);
 
-        //then
-        Optional<TempMember> savedTempMember = tempMemberRepository.findByName(name);
+        // then
+        Optional<TempMember> savedTempMember = tempMemberRepository.findByName(tempMemberDto.getName());
 
         assertThat(savedTempMember).isNotNull();
-        assertThat(savedTempMember.get().getName()).isEqualTo(name);
-        assertThat(savedTempMember.get().getEmail()).isEqualTo(email);
-        assertThat(savedTempMember.get().getPhoneNumber()).isEqualTo(phoneNumber);
+        assertThat(savedTempMember.get().getName()).isEqualTo(tempMemberDto.getName());
+        assertThat(savedTempMember.get().getEmail()).isEqualTo(tempMemberDto.getEmail());
+        assertThat(savedTempMember.get().getPhoneNumber()).isEqualTo(tempMemberDto.getPhoneNumber());
         assertThat(savedTempMember.get().isActivated()).isFalse();
     }
 }
