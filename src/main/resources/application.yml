@@ -20,3 +20,6 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+  invitation:
+    link:
+      base-url: https://testdomain.com/invitation/
