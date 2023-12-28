@@ -1,8 +1,8 @@
 미니 기술 과제
 [ 회원 초대 링크 생성 기능 ]
 
-요구 사항
---
+# 요구 사항
+
 1) 참여자 초대
 
 ✅ 그룹 매니저는 그룹에 참여자를 초대할 수 있습니다.
@@ -20,6 +20,16 @@
 ✅ 초대 링크 수락 시 임시 회원을 활성화하고 초대 링크를 만료합니다.
 
 ✅ 초대 링크는 1회 사용 시 만료됩니다.
+
+---
+
+# ERD
+![image](https://github.com/Jonggae/group-invitation/assets/130136857/00f75597-3ca5-4f9d-ab44-b0e66d880052)
+
+
+# API명세
+
+[구글 시트 주소](https://docs.google.com/spreadsheets/d/14pnQr3BBFSZkoDR4LilJUj_xqm0vseLUfMLq4YVhnwg/edit#gid=0)
 
 ---
 
