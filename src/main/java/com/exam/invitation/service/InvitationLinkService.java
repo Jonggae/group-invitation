@@ -5,6 +5,7 @@ import com.exam.invitation.domain.TempMember;
 import com.exam.invitation.repository.InvitationLinkRepository;
 import com.exam.invitation.repository.TempMemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +14,9 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class InvitationLinkService {
+
+    @Value("${server.invitation.link.base-url}")
+    private String baseUrl;
 
     private final InvitationLinkRepository invitationLinkRepository;
     private final TempMemberRepository tempMemberRepository;
@@ -26,9 +30,8 @@ public class InvitationLinkService {
                 .replace("-", "");
         /*하이픈 제거하지 않으면 f8c804bc-63e2-4c84-b7d6-fa38c19e4803 이런식으로 생성*/
 
-        return "https://testdomain.com/invitaion/" + randomLink;
+        return baseUrl + randomLink;
         // 하드코딩말고 도메인을 따로 관리하는것이 좋음.
-
     }
 
     // 링크가 수락되었을 때 로직
@@ -44,8 +47,11 @@ public class InvitationLinkService {
         tempMemberRepository.save(activateMember);
 
         // TODO 이미 활성화 되어있다면? -> 에러 메시지
-
     }
+
+    //링크 만료 설정
+
+
 
 }
 
