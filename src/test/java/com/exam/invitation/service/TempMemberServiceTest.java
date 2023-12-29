@@ -1,8 +1,8 @@
 package com.exam.invitation.service;
 
-import com.exam.invitation.domain.TempMember;
-import com.exam.invitation.dto.TempMemberDto;
-import com.exam.invitation.repository.TempMemberRepository;
+import com.exam.invitation.domain.Member;
+import com.exam.invitation.dto.MemberDto;
+import com.exam.invitation.repository.MemberRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,25 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 class TempMemberServiceTest {
 
     @Autowired
-    private TempMemberService tempMemberService;
+    private MemberService tempMemberService;
 
     // autowired가 없으면 오류가 발생
-    // Cannot invoke "com.exam.invitation.service.TempMemberService.createTempMember(String, String, String)" because "this.tempMemberService" is null
-    @Autowired private TempMemberRepository tempMemberRepository;
+    // Cannot invoke "com.exam.invitation.service.MemberService.createTempMember(String, String, String)" because "this.tempMemberService" is null
+    @Autowired private MemberRepository tempMemberRepository;
 
     @Test
     @Disabled
     @DisplayName("임시 회원 생성되는지 확인 -> 목적이 다른 테스트 코드로 비활성화함")
     void createTempMember() {
         // given
-        TempMember tempMember = new TempMember();
+        Member tempMember = new Member();
 
         // when
         tempMember.setName("CJW");
@@ -52,7 +51,7 @@ class TempMemberServiceTest {
     @Transactional
     void createTempMember2() {
         //given
-        TempMemberDto tempMemberDto = new TempMemberDto();
+        MemberDto tempMemberDto = new MemberDto();
         String name = "CJW";
         String email = "CJW@mail.com";
         String phoneNumber = "01012345678";
@@ -61,7 +60,7 @@ class TempMemberServiceTest {
         tempMemberService.createTempMember(tempMemberDto);
 
         // then
-        Optional<TempMember> savedTempMember = tempMemberRepository.findByName(tempMemberDto.getName());
+        Optional<Member> savedTempMember = tempMemberRepository.findByName(tempMemberDto.getName());
 
         assertThat(savedTempMember).isNotNull();
         assertThat(savedTempMember.get().getName()).isEqualTo(tempMemberDto.getName());
