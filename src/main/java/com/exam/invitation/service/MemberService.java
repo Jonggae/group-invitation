@@ -1,20 +1,20 @@
 package com.exam.invitation.service;
 
-import com.exam.invitation.domain.TempMember;
-import com.exam.invitation.dto.TempMemberDto;
-import com.exam.invitation.repository.TempMemberRepository;
+import com.exam.invitation.domain.Member;
+import com.exam.invitation.dto.MemberDto;
+import com.exam.invitation.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TempMemberService {
+public class MemberService {
 
-    private final TempMemberRepository tempMemberRepository;
+    private final MemberRepository tempMemberRepository;
 
     // 초대 링크 생성과 함께 임시 멤버 생성해야함
-    public TempMember createTempMember(TempMemberDto tempMemberDto) {
-        TempMember tempMember = tempMemberDto.toTempMember();
+    public Member createTempMember(MemberDto tempMemberDto) {
+        Member tempMember = tempMemberDto.toTempMember();
 
         if (tempMemberRepository.findByName(tempMember.getName()).isPresent()
                 || tempMemberRepository.findByEmail(tempMember.getEmail()).isPresent()) {

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class TempMember {
+public class Member {
     @Id
     @GeneratedValue
     private long id;

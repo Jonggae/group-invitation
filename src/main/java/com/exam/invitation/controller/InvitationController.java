@@ -1,10 +1,10 @@
 package com.exam.invitation.controller;
 
-import com.exam.invitation.domain.TempMember;
+import com.exam.invitation.domain.Member;
 import com.exam.invitation.dto.ApiResponseDto;
-import com.exam.invitation.dto.TempMemberDto;
+import com.exam.invitation.dto.MemberDto;
 import com.exam.invitation.service.InvitationLinkService;
-import com.exam.invitation.service.TempMemberService;
+import com.exam.invitation.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class InvitationController {
 
     private final InvitationLinkService invitationLinkService;
-    private final TempMemberService tempMemberService;
+    private final MemberService tempMemberService;
 
     //참여자 초대하기
     @PostMapping("/invite-member")
     // 그룹에 멤버를 초대하려면 무엇이 필요한가?
     // 링크 생성, 링크 전송 -> 이후 링크 수락하기
-    public ResponseEntity<ApiResponseDto> inviteMember(@RequestBody TempMemberDto tempMemberDto) {
-        TempMember tempMember = tempMemberService.createTempMember(tempMemberDto);
+    public ResponseEntity<ApiResponseDto> inviteMember(@RequestBody MemberDto tempMemberDto) {
+        Member tempMember = tempMemberService.createTempMember(tempMemberDto);
         String invitationLink = invitationLinkService.generateInvitationLink();
         return ResponseEntity.status(201).body(new ApiResponseDto("초대 링크 전송 완료", HttpStatus.CREATED.value()));
 

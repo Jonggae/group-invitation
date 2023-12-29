@@ -1,9 +1,9 @@
 package com.exam.invitation.controller;
 
-import com.exam.invitation.domain.TempMember;
+import com.exam.invitation.domain.Member;
 import com.exam.invitation.dto.ApiResponseDto;
-import com.exam.invitation.dto.TempMemberDto;
-import com.exam.invitation.repository.TempMemberRepository;
+import com.exam.invitation.dto.MemberDto;
+import com.exam.invitation.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,13 +31,13 @@ class InvitationControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private TempMemberRepository tempMemberRepository;
+    private MemberRepository tempMemberRepository;
 
     @Test
     @DisplayName("링크 생성 후 전송 테스트")
     void inviteMember() throws Exception {
         //given
-        TempMemberDto tempMemberDto = new TempMemberDto();
+        MemberDto tempMemberDto = new MemberDto();
         tempMemberDto.setName("CJW");
         tempMemberDto.setEmail("CJW@mail.com");
         tempMemberDto.setPhoneNumber("1012345678");
@@ -55,7 +55,7 @@ class InvitationControllerTest {
         ApiResponseDto apiResponseDto = objectMapper.readValue(responseContent, ApiResponseDto.class);
         assertThat(apiResponseDto.getMsg()).isEqualTo("초대 링크 전송 완료");
 
-        Optional<TempMember> savedTempMember = tempMemberRepository.findByName("CJW");
+        Optional<Member> savedTempMember = tempMemberRepository.findByName("CJW");
         assertThat(savedTempMember).isPresent();
     }
 
@@ -65,7 +65,7 @@ class InvitationControllerTest {
         //given
         Long invitationId = 1L;
 
-        TempMember tempMember = new TempMember();
+        Member tempMember = new Member();
         tempMemberRepository.save(tempMember);
 
         //when
