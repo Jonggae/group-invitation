@@ -4,11 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue
@@ -18,11 +18,24 @@ public class Member {
     private String phoneNumber; //초대받을 사용자의 전화번호
     private String email; //초대받을 사용자의 이메일 주소
 
-    private boolean activated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
+//    private final boolean activated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
 
-    public void activate() {
-        this.setActivated(true);
+    private Member(String name, String phoneNumber, String email) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+
     }
 
-    // 임시 회원을 생성하려면 getter setter가 필요한가?
+    public static Member of(String name, String phoneNumber, String email) {
+        return new Member(name, phoneNumber, email);
+    }
+
+//    public void activate() {
+//        this.setActivated(true);
+//    }
+//
+//    private void setActivated(boolean b) {
+//    }
+
 }

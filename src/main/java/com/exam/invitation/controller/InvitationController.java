@@ -1,7 +1,6 @@
 package com.exam.invitation.controller;
 
-import com.exam.invitation.domain.Member;
-import com.exam.invitation.dto.ApiResponseDto;
+import com.exam.invitation.dto.InvitationLinkDto;
 import com.exam.invitation.dto.MemberDto;
 import com.exam.invitation.service.InvitationLinkService;
 import com.exam.invitation.service.MemberService;
@@ -18,24 +17,24 @@ import org.springframework.web.bind.annotation.*;
 public class InvitationController {
 
     private final InvitationLinkService invitationLinkService;
-    private final MemberService tempMemberService;
+    private final MemberService memberService;
 
-    //참여자 초대하기
     @PostMapping("/invite-member")
-    // 그룹에 멤버를 초대하려면 무엇이 필요한가?
-    // 링크 생성, 링크 전송 -> 이후 링크 수락하기
-    public ResponseEntity<ApiResponseDto> inviteMember(@RequestBody MemberDto tempMemberDto) {
-        Member tempMember = tempMemberService.createTempMember(tempMemberDto);
-        String invitationLink = invitationLinkService.generateInvitationLink();
-        return ResponseEntity.status(201).body(new ApiResponseDto("초대 링크 전송 완료", HttpStatus.CREATED.value()));
-
+    public ResponseEntity<String> inviteMember(@RequestBody MemberDto memberDto) {
+        memberService.createMember(memberDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("멤버를 초대하였습니다.");
     }
-    @PostMapping("/accept")
-    // 링크를 수락하면 이루어지는 로직
-    public ResponseEntity<ApiResponseDto> acceptInvitation(@RequestParam Long id) {
-        invitationLinkService.acceptInvitationLink(id);
 
-        return ResponseEntity.status(201).body(new ApiResponseDto("멤버가 초대요청을 수락하였습니다", HttpStatus.CREATED.value()));
+    @GetMapping("/generate-link")
+    public InvitationLinkDto generateInvitationLink() {
+        String generatedLink = invitationLinkService.generateInvitationLink();
+        return InvitationLinkDto.of(generatedLink);
+    }
+
+    @PostMapping("/accept")
+    public ResponseEntity<String> acceptInvitation(@RequestParam Long id) {
+        invitationLinkService.acceptInvitationLink(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body("멤버가 초대요청을 수락하였습니다");
     }
 
 

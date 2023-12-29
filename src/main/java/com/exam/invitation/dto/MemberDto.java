@@ -2,21 +2,23 @@ package com.exam.invitation.dto;
 
 import com.exam.invitation.domain.Member;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class MemberDto {
-    private String name;
-    private String email;
-    private String phoneNumber;
 
-    public Member toTempMember() {
-        Member tempMember = new Member();
-        tempMember.setName(this.name);
-        tempMember.setEmail(this.email);
-        tempMember.setPhoneNumber(this.phoneNumber);
-        // activate 는 초기값이 false 이므로 생략
-        return tempMember;
+public record MemberDto(String name, String email, String phoneNumber) {
+
+    public static MemberDto of(String name, String email, String phoneNumber) {
+        return new MemberDto(name, email, phoneNumber);
     }
+
+    public static MemberDto from(Member entity) {
+        return new MemberDto(
+                entity.getName(),
+                entity.getEmail(),
+                entity.getPhoneNumber());
+    }
+
+    public Member toEntity() {
+        return Member.of(name, email, phoneNumber);
+    }
+
 }
