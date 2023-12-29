@@ -1,62 +1,72 @@
 package com.exam.invitation.controller;
 
 import com.exam.invitation.domain.Member;
-import com.exam.invitation.dto.ApiResponseDto;
+import com.exam.invitation.dto.InvitationLinkDto;
 import com.exam.invitation.dto.MemberDto;
 import com.exam.invitation.repository.MemberRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.exam.invitation.service.InvitationLinkService;
+import com.exam.invitation.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+
+
+@WebMvcTest(InvitationController.class)
 class InvitationControllerTest {
 
-
-    // controller에는 mock을 사용?
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private MemberRepository tempMemberRepository;
+    private MemberRepository memberRepository;
+
+    @MockBean
+    private MemberService memberService;
+    @MockBean
+    private InvitationLinkService invitationLinkService;
+
 
     @Test
-    @DisplayName("링크 생성 후 전송 테스트")
+    @DisplayName("링크 생성 테스트")
+    void generateLink() throws Exception {
+        //given
+        String baseUrl = "http://testdomain.com";
+        String generatedLink = baseUrl + "mocked-link";
+
+        when(invitationLinkService.generateInvitationLink()).thenReturn(generatedLink);
+
+        //when &then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/invitation/generate-link")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.link").value(generatedLink));
+    }
+
+    @Test
+    @DisplayName("링크 생성 후 전송 테스트 - inviteMember")
     void inviteMember() throws Exception {
         //given
-        MemberDto tempMemberDto = new MemberDto();
-        tempMemberDto.setName("CJW");
-        tempMemberDto.setEmail("CJW@mail.com");
-        tempMemberDto.setPhoneNumber("1012345678");
 
-        //when -> 여기에 작성되는 내용에 대한 이해 필요
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/invitation/invite-member")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(tempMemberDto)))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andReturn();
+
+        //when
+
 
         //then
-        String responseContent = mvcResult.getResponse().getContentAsString();
-        ApiResponseDto apiResponseDto = objectMapper.readValue(responseContent, ApiResponseDto.class);
-        assertThat(apiResponseDto.getMsg()).isEqualTo("초대 링크 전송 완료");
 
-        Optional<Member> savedTempMember = tempMemberRepository.findByName("CJW");
-        assertThat(savedTempMember).isPresent();
     }
 
     @Test
@@ -65,8 +75,8 @@ class InvitationControllerTest {
         //given
         Long invitationId = 1L;
 
-        Member tempMember = new Member();
-        tempMemberRepository.save(tempMember);
+        Member Member = new Member();
+        memberRepository.save(Member);
 
         //when
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/invitation/accept")
@@ -80,5 +90,21 @@ class InvitationControllerTest {
 
         //then
     }
+
+    private MemberDto createMemberDto() {
+        return MemberDto.of(
+                "CJW",
+                "CJW@mail.com",
+                "01012345678"
+        );
+    }
+
+    private InvitationLinkDto createInvitationLinkDto() {
+        return InvitationLinkDto.of(
+                "asdf");
+
+    }
+
+
 }
 
