@@ -14,8 +14,16 @@ public class MemberService {
 
     // 초대 링크 생성과 함께 임시 멤버 생성해야함
     public void createMember(MemberDto memberDto) {
-        invitationLinkService.generateInvitationLink();
+        generateInvitationLink();
         checkNameAndEmail(memberDto);
+        saveMember(memberDto);
+    }
+
+    private void generateInvitationLink() {
+        invitationLinkService.generateInvitationLink();
+    }
+
+    private void saveMember(MemberDto memberDto) {
         memberRepository.save(memberDto.toEntity());
     }
 
@@ -26,4 +34,5 @@ public class MemberService {
         if (memberRepository.findByEmail(memberDto.toEntity().getEmail()).isPresent()) {
             throw new IllegalArgumentException("같은 이메일이 이미 존재합니다");
         }
-    }}
+    }
+}
