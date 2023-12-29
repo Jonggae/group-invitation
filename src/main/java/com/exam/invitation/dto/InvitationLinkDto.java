@@ -3,11 +3,13 @@ package com.exam.invitation.dto;
 import com.exam.invitation.domain.InvitationLink;
 
 public class InvitationLinkDto {
-    private String link;
+    private final String link;
 
-    public InvitationLinkDto(String link) {}
+    public InvitationLinkDto(String link) {
+        this.link = link;
+    }
 
-    public InvitationLinkDto of(String link) {
+    public static InvitationLinkDto of(String link) {
         return new InvitationLinkDto(link);
     }
 
