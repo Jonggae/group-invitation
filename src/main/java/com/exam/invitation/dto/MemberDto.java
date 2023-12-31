@@ -1,7 +1,6 @@
 package com.exam.invitation.dto;
 
 import com.exam.invitation.domain.Member;
-import lombok.Getter;
 
 
 public record MemberDto(String name, String email, String phoneNumber) {
