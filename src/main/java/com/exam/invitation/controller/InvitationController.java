@@ -19,22 +19,24 @@ public class InvitationController {
     private final InvitationLinkService invitationLinkService;
     private final MemberService memberService;
 
+    /*
+    * 초대 작업 수행 시 링크 생성, 임시 멤버 생성이 진행됨*/
     @PostMapping("/invite-member")
     public ResponseEntity<String> inviteMember(@RequestBody MemberDto memberDto) {
         memberService.createMember(memberDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("멤버를 초대하였습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("초대 링크를 보냈습니다.");
     }
 
-    @GetMapping("/generate-link")
-    public InvitationLinkDto generateInvitationLink() {
-        String generatedLink = invitationLinkService.generateInvitationLink();
-        return InvitationLinkDto.of(generatedLink);
-    }
+//    @GetMapping("/generate-link")
+//    public InvitationLinkDto generateInvitationLink() {
+//        String generatedLink = invitationLinkService.generateInvitationLink();
+//        return InvitationLinkDto.of(generatedLink);
+//    }
 
     @PostMapping("/accept")
     public ResponseEntity<String> acceptInvitation(@RequestParam Long id) {
         invitationLinkService.acceptInvitationLink(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body("멤버가 초대요청을 수락하였습니다");
+        return ResponseEntity.status(HttpStatus.CREATED).body("멤버가 초대 요청을 수락하였습니다");
     }
 
 
