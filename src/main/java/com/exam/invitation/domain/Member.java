@@ -18,7 +18,7 @@ public class Member {
     private String email; //초대받을 사용자의 이메일 주소
 
     @Enumerated(EnumType.STRING)
-    private MemberRoleEnum role = MemberRoleEnum.TEMPMEMBER;
+    private MemberRoleEnum role = MemberRoleEnum.TEMPMEMBER; // 멤버 권한 분리
 
     private boolean isActivated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
 
