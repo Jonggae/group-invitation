@@ -22,11 +22,10 @@ public class Member {
 
     private boolean isActivated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
 
-    private Member(String name, String phoneNumber, String email) {
+    private Member(String name, String email, String phoneNumber) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
         this.email = email;
-
+        this.phoneNumber = phoneNumber;
     }
 
     public static Member of(String name, String phoneNumber, String email) {
