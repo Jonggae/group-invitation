@@ -17,7 +17,6 @@ public class InvitationLinkService {
     @Value("${server.invitation.link.base-url}")
     private String baseUrl;
 
-    private final InvitationLinkRepository invitationLinkRepository;
     private final MemberRepository tempMemberRepository;
 
     // 무작위의 1회용 링크 생성
@@ -27,11 +26,12 @@ public class InvitationLinkService {
         return baseUrl + randomLink;
     }
 
-    // 링크가 수락되었을 때 로직
+
+    // 링크 수락 후 로직
     public void acceptInvitationLink(Long id) {
         Member activateMember = tempMemberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
-
+        activateMember.activate();
         tempMemberRepository.save(activateMember);
 
         // TODO 이미 활성화 되어있다면? -> 에러 메시지

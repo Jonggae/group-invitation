@@ -1,8 +1,7 @@
 package com.exam.invitation.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.exam.invitation.authority.MemberRoleEnum;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,24 +17,28 @@ public class Member {
     private String phoneNumber; //초대받을 사용자의 전화번호
     private String email; //초대받을 사용자의 이메일 주소
 
-//    private final boolean activated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
+    @Enumerated(EnumType.STRING)
+    private MemberRoleEnum role = MemberRoleEnum.TEMPMEMBER; // 멤버 권한 분리
 
-    private Member(String name, String phoneNumber, String email) {
+    private boolean isActivated = Boolean.FALSE; //임시 회원이므로 활성화 태그를 만들어놓고 활성화 시키지 않음.
+
+    private Member(String name, String email, String phoneNumber) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
         this.email = email;
-
+        this.phoneNumber = phoneNumber;
     }
 
     public static Member of(String name, String phoneNumber, String email) {
         return new Member(name, phoneNumber, email);
     }
 
-//    public void activate() {
-//        this.setActivated(true);
-//    }
-//
-//    private void setActivated(boolean b) {
-//    }
+    public void activate() {
+        this.setIsActivated();
+    }
+
+    private void setIsActivated() {
+        this.isActivated = true;
+        this.role = MemberRoleEnum.MEMBER;
+    }
 
 }
