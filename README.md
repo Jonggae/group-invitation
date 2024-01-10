@@ -52,7 +52,11 @@ TODO list
 
 아직 테스트코드는 공부할 것이 더 많으나 이번 작업을 통해 다른 코드들도 리팩토링 할 수 있을것으로 생각됨
 
-자세한 내용은 commit로그를 참조하자
+자세한 내용은 commit로그와 블로그에 작성
+
+https://jonggae.tistory.com/121
+
+https://jonggae.tistory.com/122
 
 
 
